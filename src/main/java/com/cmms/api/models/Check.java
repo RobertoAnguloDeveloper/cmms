@@ -44,7 +44,7 @@ public class Check {
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonIgnore
-    private Check question;
+    private Question question;
 
     @ManyToOne
     @JoinColumn(name = "worshop_id", referencedColumnName = "id", insertable = false, updatable = false)
