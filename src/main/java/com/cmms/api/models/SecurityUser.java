@@ -1,42 +1,37 @@
-package com.cmms.api.services;
+package com.cmms.api.models;
 
-import com.cmms.api.models.User;
 import org.springframework.security.core.GrantedAuthority; 
 import org.springframework.security.core.authority.SimpleGrantedAuthority; 
 import org.springframework.security.core.userdetails.UserDetails; 
 
 import java.util.Arrays; 
-import java.util.Collection; 
-import java.util.List; 
-import java.util.stream.Collectors; 
+import java.util.Collection;
 
-public class UserInfoDetails implements UserDetails { 
+public class SecurityUser implements UserDetails { 
 
-	private String name; 
-	private String password; 
-	private List<GrantedAuthority> authorities; 
+	private final User user;
 
-	public UserInfoDetails(User userInfo) { 
-		name = userInfo.getUsername(); 
-		password = userInfo.getPassword(); 
-		authorities = Arrays.stream(userInfo.getRole().getRoleName().split(",")) 
-				.map(SimpleGrantedAuthority::new) 
-				.collect(Collectors.toList()); 
+	public SecurityUser(User user) { 
+		this.user = user; 
 	} 
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() { 
-		return authorities; 
+		return Arrays.stream(user
+                .getRole().getRoleName()
+                .split(","))
+                .map(SimpleGrantedAuthority::new)
+                .toList(); 
 	} 
 
 	@Override
 	public String getPassword() { 
-		return password; 
+		return user.getPassword(); 
 	} 
 
 	@Override
 	public String getUsername() { 
-		return name; 
+		return user.getUsername(); 
 	} 
 
 	@Override

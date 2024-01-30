@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,7 +29,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 20)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 8)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
     @Column(name = "email", nullable = false, length = 255)
@@ -49,6 +46,6 @@ public class User {
     private List<Check> checks;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 }

@@ -4,6 +4,8 @@ import com.cmms.api.models.User;
 import com.cmms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +37,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        // Puedes realizar validaciones u operaciones adicionales antes de guardar el usuario
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
