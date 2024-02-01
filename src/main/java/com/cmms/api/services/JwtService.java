@@ -33,6 +33,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
+        //System.out.println("AQUI----->"+username);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
@@ -45,22 +46,23 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts
-                .builder()
-                .setHeaderParam("typ", "JWT")  // Set the header parameters here
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSignInKey())
-                .compact();
+        return Jwts.builder()
+                    .header()
+                    .add("typ", "JWT")
+                    .and()
+                    .claims(extraClaims)
+                    .subject(userDetails.getUsername())
+                    .issuedAt(new Date(System.currentTimeMillis()))
+                    .expiration(new Date(System.currentTimeMillis()+1000*60*24))
+                    .signWith(getSignInKey())
+                    .compact();
     }
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                    .setSigningKey(getSignInKey())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+        return Jwts.parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getSignInKey() {

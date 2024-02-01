@@ -60,7 +60,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(req -> req
                 //.requestMatchers("/login/**").permitAll()
                 .requestMatchers("/api/user/*").hasAnyAuthority("Superuser", "Site manager")
-                .anyRequest().authenticated())
+                .anyRequest().authenticated()).httpBasic(withDefaults())
 				.userDetailsService(myUserDetailsService)
 				.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

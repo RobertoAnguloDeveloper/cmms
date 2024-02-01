@@ -24,7 +24,7 @@ public class Photo {
     private String fileName;
 
     @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, columnDefinition = "bytea")
     private byte[] content;
 
     @Column(name = "register_date", length = 255)

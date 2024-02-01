@@ -1,9 +1,13 @@
 package com.cmms.api.controllers;
 
+import com.cmms.api.auth.response.AuthResponse;
+import com.cmms.api.auth.service.AuthService;
+import com.cmms.api.models.SecurityUser;
 import com.cmms.api.models.User;
 import com.cmms.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,19 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthService authService;
+
+    // public UserController(AuthService authService){
+    // this.authService = authService;
+    // }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody User user) {
+        return ResponseEntity.ok(authService.authenticate(new SecurityUser(user)));
+    }
+
 
     @PostMapping("/save")
     public ResponseEntity<User> createUser(@RequestBody User user) {

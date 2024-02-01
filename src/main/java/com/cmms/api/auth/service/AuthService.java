@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Service;
 
 import com.cmms.api.auth.response.AuthResponse;
 import com.cmms.api.models.SecurityUser;
@@ -12,6 +13,7 @@ import com.cmms.api.models.User;
 import com.cmms.api.repositories.UserRepository;
 import com.cmms.api.services.JwtService;
 
+@Service
 public class AuthService {
     private final UserRepository repository;
     private final JwtService jwtService;
