@@ -1,13 +1,20 @@
 package com.cmms.api.controllers;
 
+// import com.cmms.api.auth.request.AuthRequest;
 import com.cmms.api.auth.response.AuthResponse;
 import com.cmms.api.auth.service.AuthService;
 import com.cmms.api.models.SecurityUser;
 import com.cmms.api.models.User;
+// import com.cmms.api.services.JpaUserDetailsService;
+import com.cmms.api.services.JwtService;
 import com.cmms.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.security.authentication.AuthenticationManager;
+// import org.springframework.security.authentication.BadCredentialsException;
+// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+// import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +31,15 @@ public class UserController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    JwtService jwtService;
+
+    // @Autowired
+    // private AuthenticationManager authenticationManager;
+
+    // @Autowired
+    // private JpaUserDetailsService myUserDetailService;
+
     // public UserController(AuthService authService){
     // this.authService = authService;
     // }
@@ -33,6 +49,18 @@ public class UserController {
         return ResponseEntity.ok(authService.authenticate(new SecurityUser(user)));
     }
 
+    // @PostMapping("/login")
+    // public AuthResponse createToken(@RequestBody AuthRequest authenticationRequest) throws Exception {
+    //     try {
+    //         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    //         authenticationManager.authenticate(authentication);
+    //     } catch (BadCredentialsException e) {
+    //         throw new Exception("Invalid username or password", e);
+    //     }
+    //     UserDetails userDetails = myUserDetailService.loadUserByUsername(authenticationRequest.getUsername());
+    //     String token = jwtService.generateToken(userDetails);
+    //     return new AuthResponse(token);
+    // }
 
     @PostMapping("/save")
     public ResponseEntity<User> createUser(@RequestBody User user) {
