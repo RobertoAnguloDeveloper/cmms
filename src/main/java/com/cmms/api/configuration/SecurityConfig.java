@@ -65,6 +65,8 @@ public class SecurityConfig {
 				.requestMatchers("/api/user/site-managers").hasAnyAuthority("Superuser", "Site manager")
 				.requestMatchers("/api/user/update").hasAnyAuthority("Superuser", "Site manager")
 				.requestMatchers("/api/user/{id}").hasAnyAuthority("Superuser", "Site manager")
+				.requestMatchers("/api/photo/all").hasAnyAuthority("Superuser", "Site manager")
+				.requestMatchers("/api/photo/upload").hasAnyAuthority("Superuser", "Site manager")
                 .anyRequest().authenticated())
             .userDetailsService(myUserDetailsService)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

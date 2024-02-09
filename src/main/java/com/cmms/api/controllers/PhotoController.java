@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/photos")
+@RequestMapping("/api/photo")
 public class PhotoController {
 
     @Autowired
     private PhotoService photoService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Photo>> getAllPhotos() {
         List<Photo> photos = photoService.getAllPhotos();
         return new ResponseEntity<>(photos, HttpStatus.OK);
@@ -42,13 +42,11 @@ public class PhotoController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Photo> uploadPhoto(@RequestParam("file") MultipartFile file,
-            @RequestParam("fileName") String fileName,
-            @RequestParam("registerDate") String registerDate) {
+    public ResponseEntity<Photo> uploadPhoto(@RequestParam("file") MultipartFile file) throws Exception {
         try {
-            Photo createdPhoto = photoService.uploadPhoto(file, fileName, registerDate);
+            Photo createdPhoto = photoService.uploadPhoto(file);
             return new ResponseEntity<>(createdPhoto, HttpStatus.CREATED);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -64,18 +62,11 @@ public class PhotoController {
             byte[] content = photoService.downloadPhoto(id);
 
             if (content != null) {
-                String originalFileName = (photo.getFileName() != null) ? photo.getFileName() : "photo" + id;
-
-                ByteArrayResource resource = new ByteArrayResource(content);
-
-                HttpHeaders headers = new HttpHeaders();
-                headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + originalFileName);
-
                 return ResponseEntity.ok()
-                        .headers(headers)
-                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                        .contentLength(content.length)
-                        .body(resource);
+                        .contentType(MediaType.parseMediaType(photo.getFileType()))
+                        .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + photo.getFileName()+ "\"")
+                        .body(new ByteArrayResource(photo.getContent()));
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }

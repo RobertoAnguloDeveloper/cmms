@@ -2,8 +2,10 @@ package com.cmms.api.services;
 
 import com.cmms.api.models.Photo;
 import com.cmms.api.repositories.PhotoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -52,13 +54,16 @@ public class PhotoService {
         photoRepository.deleteById(id);
     }
 
-    public Photo uploadPhoto(MultipartFile file, String fileName, String registerDate) throws IOException {
+    public Photo uploadPhoto(MultipartFile file) throws Exception {
         Photo photo = new Photo();
-        photo.setFileName(fileName);
-        photo.setContent(file.getBytes());
-        photo.setRegisterDate(registerDate);
-
-        return photoRepository.save(photo);
+        photo.setFileName(file.getOriginalFilename()); // No necesitas limpiar el nombre del archivo
+        try {
+            photo.setFileType(file.getContentType());
+            photo.setContent(file.getBytes());
+            return photoRepository.save(photo);
+        } catch (Exception e) {
+            throw new Exception("Could not save the file " + file.getOriginalFilename(), e);
+        }
     }
 
     public byte[] downloadPhoto(Integer id) {
