@@ -5,10 +5,8 @@ import com.cmms.api.repositories.PhotoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,16 +20,19 @@ public class PhotoService {
         return photoRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Optional<Photo> getPhotoById(Integer id) {
         return photoRepository.findById(id);
     }
 
+    @SuppressWarnings("null")
     public Photo createPhoto(Photo photo) {
         return photoRepository.save(photo);
     }
 
     public Photo updatePhoto(Integer id, Photo photo) {
         if (photo != null && photo.getId() != null) {
+            @SuppressWarnings("null")
             Optional<Photo> existingPhoto = photoRepository.findById(id);
 
             if (existingPhoto.isPresent()) {
@@ -50,6 +51,7 @@ public class PhotoService {
         }
     }
 
+    @SuppressWarnings("null")
     public void deletePhoto(Integer id) {
         photoRepository.deleteById(id);
     }
@@ -67,6 +69,7 @@ public class PhotoService {
     }
 
     public byte[] downloadPhoto(Integer id) {
+        @SuppressWarnings("null")
         Optional<Photo> photoOptional = photoRepository.findById(id);
         return photoOptional.map(Photo::getContent).orElse(null);
     }

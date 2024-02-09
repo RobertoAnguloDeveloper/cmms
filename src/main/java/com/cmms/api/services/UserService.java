@@ -32,6 +32,7 @@ public class UserService {
         return userRepository.findAllSiteManagers();
     }
 
+    @SuppressWarnings("null")
     public Optional<User> getUserById(Integer id) {
         return userRepository.findById(id);
     }
@@ -43,6 +44,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @SuppressWarnings("null")
     public User updateUser(User user) {
         if (user != null && user.getId() != null) {
             Optional<User> existingUser = userRepository.findById(user.getId());
@@ -69,6 +71,7 @@ public class UserService {
         }
     }
 
+    @SuppressWarnings("null")
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }

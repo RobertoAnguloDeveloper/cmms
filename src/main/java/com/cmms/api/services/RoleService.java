@@ -41,15 +41,18 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Optional<Role> getRoleById(Integer id) {
         return roleRepository.findById(id);
     }
 
+    @SuppressWarnings("null")
     public Role createRole(Role role) {
         // Puedes realizar validaciones u operaciones adicionales antes de guardar el rol
         return roleRepository.save(role);
     }
 
+    @SuppressWarnings("null")
     public Role updateRole(Role role) {
         if (role != null && role.getId() != null) {
             Optional<Role> existingRole = roleRepository.findById(role.getId());
@@ -72,6 +75,7 @@ public class RoleService {
         }
     }
 
+    @SuppressWarnings("null")
     public void deleteRole(Integer id) {
         roleRepository.deleteById(id);
     }
