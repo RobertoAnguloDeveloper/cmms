@@ -37,9 +37,6 @@ public class Check {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "register_date", length = 255)
-    private String registerDate;
-
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonIgnore

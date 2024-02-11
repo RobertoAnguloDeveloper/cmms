@@ -26,9 +26,6 @@ public class Role {
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
-    @Column(name = "register_date", length = 255)
-    private String registerDate;
-
     @OneToMany(mappedBy = "role")
     @JsonIgnore
     private List<User> users;

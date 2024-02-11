@@ -39,7 +39,6 @@ public class PhotoService {
                 Photo updatedPhoto = existingPhoto.get();
                 updatedPhoto.setFileName(photo.getFileName());
                 updatedPhoto.setContent(photo.getContent());
-                updatedPhoto.setRegisterDate(photo.getRegisterDate());
                 // Puedes actualizar otros campos aquí
 
                 return photoRepository.save(updatedPhoto);

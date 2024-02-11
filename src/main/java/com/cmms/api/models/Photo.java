@@ -30,9 +30,6 @@ public class Photo {
     @Column(name = "file_type", length = 255, nullable = false)
     private String fileType;
 
-    @Column(name = "register_date", length = 255)
-    private String registerDate;
-
     @OneToMany(mappedBy = "photo")
     @JsonIgnore
     private List<CheckPhoto> checksPhotos;
