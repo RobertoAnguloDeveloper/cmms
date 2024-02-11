@@ -3,9 +3,9 @@ package com.cmms.api.services;
 import com.cmms.api.models.User;
 import com.cmms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,7 +64,9 @@ public class UserService {
                     updatedUser.setUsername(user.getUsername());
                 }
                 if (user.getPassword() != null) {
-                    updatedUser.setPassword(user.getPassword());
+                    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                    String hashedPassword = passwordEncoder.encode(user.getPassword());
+                    updatedUser.setPassword(hashedPassword);
                 }
                 if (user.getEmail() != null) {
                     updatedUser.setEmail(user.getEmail());
