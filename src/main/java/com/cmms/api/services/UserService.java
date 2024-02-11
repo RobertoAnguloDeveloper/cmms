@@ -45,10 +45,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @SuppressWarnings("null")
-    public User updateUser(User user) {
-        if (user != null && user.getId() != null) {
-            Optional<User> existingUser = userRepository.findById(user.getId());
+    public User updateUser(Integer id, User user) {
+        if (user != null && id != null) {
+            Optional<User> existingUser = userRepository.findById(id);
 
             if (existingUser.isPresent()) {
                 User updatedUser = existingUser.get();

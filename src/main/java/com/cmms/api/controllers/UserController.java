@@ -50,16 +50,20 @@ public class UserController {
     }
 
     // @PostMapping("/login")
-    // public AuthResponse createToken(@RequestBody AuthRequest authenticationRequest) throws Exception {
-    //     try {
-    //         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-    //         authenticationManager.authenticate(authentication);
-    //     } catch (BadCredentialsException e) {
-    //         throw new Exception("Invalid username or password", e);
-    //     }
-    //     UserDetails userDetails = myUserDetailService.loadUserByUsername(authenticationRequest.getUsername());
-    //     String token = jwtService.generateToken(userDetails);
-    //     return new AuthResponse(token);
+    // public AuthResponse createToken(@RequestBody AuthRequest
+    // authenticationRequest) throws Exception {
+    // try {
+    // UsernamePasswordAuthenticationToken authentication = new
+    // UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+    // authenticationRequest.getPassword());
+    // authenticationManager.authenticate(authentication);
+    // } catch (BadCredentialsException e) {
+    // throw new Exception("Invalid username or password", e);
+    // }
+    // UserDetails userDetails =
+    // myUserDetailService.loadUserByUsername(authenticationRequest.getUsername());
+    // String token = jwtService.generateToken(userDetails);
+    // return new AuthResponse(token);
     // }
 
     @PostMapping("/save")
@@ -116,14 +120,10 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        User updatedUser = userService.updateUser(user);
-        if (updatedUser == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(updatedUser);
-        }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
