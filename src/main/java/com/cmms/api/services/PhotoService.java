@@ -31,6 +31,7 @@ public class PhotoService {
         return photoRepository.save(photo);
     }
 
+    @SuppressWarnings("null")
     public Photo updatePhoto(Integer id, String fileName) {
         Optional<Photo> existingPhoto = photoRepository.findById(id);
 
