@@ -35,5 +35,5 @@ public class Photo {
 
     @OneToMany(mappedBy = "photo")
     @JsonIgnore
-    private List<Check> checks;
+    private List<CheckPhoto> checksPhotos;
 }

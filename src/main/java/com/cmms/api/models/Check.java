@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -31,9 +33,6 @@ public class Check {
 
     @Column(name = "deviation_id", nullable = false)
     private Integer deviationId;
-
-    @Column(name = "photos_id", nullable = false)
-    private Integer photosId;
 
     @Column(name = "user_id", nullable = false)
     private Integer userId;
@@ -67,13 +66,11 @@ public class Check {
     private Deviation deviation;
 
     @ManyToOne
-    @JoinColumn(name = "photos_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonIgnore
-    private Photo photo;
-
-    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "check")
+    @JsonIgnore
+    private List<CheckPhoto> checkPhotos;
 }

@@ -20,8 +20,8 @@ public class Workshop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "answer", length = 255, nullable = false)
-    private String answer;
+    @Column(name = "workshop", length = 255, nullable = false)
+    private String workshop;
 
     @Column(name = "register_date", length = 255, nullable = false)
     private String registerDate;
