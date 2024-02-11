@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,23 +31,18 @@ public class PhotoService {
         return photoRepository.save(photo);
     }
 
-    public Photo updatePhoto(Integer id, Photo photo) {
-        if (photo != null && photo.getId() != null) {
-            @SuppressWarnings("null")
-            Optional<Photo> existingPhoto = photoRepository.findById(id);
+    public Photo updatePhoto(Integer id, String fileName) {
+        Optional<Photo> existingPhoto = photoRepository.findById(id);
 
-            if (existingPhoto.isPresent()) {
-                Photo updatedPhoto = existingPhoto.get();
-                updatedPhoto.setFileName(photo.getFileName());
-                updatedPhoto.setContent(photo.getContent());
-                // Puedes actualizar otros campos aquí
+        if (existingPhoto.isPresent()) {
+            Photo photo = existingPhoto.get();
+            photo.setFileName(fileName);
 
-                return photoRepository.save(updatedPhoto);
-            } else {
-                return null;
-            }
+            // Actualiza la fecha de modificación
+            photo.setModifyDate(LocalDateTime.now().toString());
+            return photoRepository.save(photo);
         } else {
-            return null;
+            return null; // Manejar el caso de foto no encontrada
         }
     }
 

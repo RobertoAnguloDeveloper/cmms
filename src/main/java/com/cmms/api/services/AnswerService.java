@@ -6,6 +6,7 @@ import com.cmms.api.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,23 +30,28 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
-    @SuppressWarnings("null")
-    public Answer updateAnswer(Answer answer) {
-        if (answer != null && answer.getId() != null) {
-            Optional<Answer> existingAnswer = answerRepository.findById(answer.getId());
+    public Answer updateAnswer(Integer id, Answer answer) {
+        if (answer != null && id != null) {
+            Optional<Answer> existingAnswer = answerRepository.findById(id);
 
             if (existingAnswer.isPresent()) {
                 Answer updatedAnswer = existingAnswer.get();
 
-                // Actualiza los campos según sea necesario
-                updatedAnswer.setAnswer(answer.getAnswer());
-                // Actualiza otros campos aquí si es necesario
+                // Actualiza los campos no nulos
+                if(answer.getAnswer() != null){
+                    updatedAnswer.setAnswer(answer.getAnswer());
+                }
+
+                // Actualiza la fecha de modificación
+                updatedAnswer.setModifyDate(LocalDateTime.now().toString());
 
                 return answerRepository.save(updatedAnswer);
             } else {
+                System.out.println("Answer not found");
                 return null; // Manejar el caso de respuesta no encontrada
             }
         } else {
+            System.out.println("No Answer sent");
             return null; // Manejar el caso de respuesta nula o sin ID
         }
     }

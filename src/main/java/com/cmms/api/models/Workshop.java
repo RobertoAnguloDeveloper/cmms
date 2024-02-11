@@ -23,7 +23,10 @@ public class Workshop {
     @Column(name = "workshop", length = 255, nullable = false)
     private String workshop;
 
-    @Column(name = "register_date", length = 255, nullable = false)
+    @Column(name = "modify_date", length = 255)
+    private String modifyDate;
+
+    @Column(name = "register_date", length = 255)
     private String registerDate;
 
     @OneToMany(mappedBy = "workshop")

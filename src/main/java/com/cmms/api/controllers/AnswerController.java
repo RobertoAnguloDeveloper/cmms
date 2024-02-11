@@ -41,9 +41,9 @@ public class AnswerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Answer> updateAnswer(@RequestBody Answer answer) {
-        Answer updatedAnswer = answerService.updateAnswer(answer);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Answer> updateAnswer(@PathVariable("id") Integer id, @RequestBody Answer answer) {
+        Answer updatedAnswer = answerService.updateAnswer(id, answer);
         if (updatedAnswer == null) {
             return ResponseEntity.notFound().build();
         } else {

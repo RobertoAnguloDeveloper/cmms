@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,15 +53,28 @@ public class UserService {
             if (existingUser.isPresent()) {
                 User updatedUser = existingUser.get();
 
-                // Actualiza los campos según sea necesario
-                updatedUser.setFirstName(user.getFirstName());
-                updatedUser.setLastName(user.getLastName());
-                updatedUser.setUsername(user.getUsername());
-                updatedUser.setPassword(user.getPassword());
-                updatedUser.setEmail(user.getEmail());
-                updatedUser.setPhone(user.getPhone());
+                // Actualiza los campos no nulos
+                if (user.getFirstName() != null) {
+                    updatedUser.setFirstName(user.getFirstName());
+                }
+                if (user.getLastName() != null) {
+                    updatedUser.setLastName(user.getLastName());
+                }
+                if (user.getUsername() != null) {
+                    updatedUser.setUsername(user.getUsername());
+                }
+                if (user.getPassword() != null) {
+                    updatedUser.setPassword(user.getPassword());
+                }
+                if (user.getEmail() != null) {
+                    updatedUser.setEmail(user.getEmail());
+                }
+                if (user.getPhone() != null) {
+                    updatedUser.setPhone(user.getPhone());
+                }
 
-                // Puedes actualizar otros campos aquí
+                // Actualiza la fecha de modificación
+                updatedUser.setModifyDate(LocalDateTime.now().toString());
 
                 return userRepository.save(updatedUser);
             } else {
@@ -79,9 +93,9 @@ public class UserService {
     public User getUserByUsername(String username) {
         List<User> users = getAllUsers();
 
-        if (users != null){
+        if (users != null) {
             for (User user : users) {
-                if(user.getUsername().equals(username)){
+                if (user.getUsername().equals(username)) {
                     return user;
                 }
             }

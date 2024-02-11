@@ -23,6 +23,12 @@ public class Question {
     @Column(name = "question", length = 255, nullable = false)
     private String question;
 
+    @Column(name = "modify_date", length = 255)
+    private String modifyDate;
+
+    @Column(name = "register_date", length = 255)
+    private String registerDate;
+
     @OneToMany(mappedBy = "question")
     @JsonIgnore
     private List<Check> checks;

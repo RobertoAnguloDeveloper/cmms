@@ -24,4 +24,10 @@ public class CheckPhoto {
     @JoinColumn(name = "photo_id", nullable = false)
     private Photo photo;
 
+    @Column(name = "modify_date", length = 255)
+    private String modifyDate;
+    
+    @Column(name = "register_date", length = 255)
+    private String registerDate;
+
 }

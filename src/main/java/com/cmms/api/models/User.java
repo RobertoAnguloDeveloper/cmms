@@ -38,6 +38,12 @@ public class User {
     @Column(name = "phone", length = 255)
     private String phone;
 
+    @Column(name = "modify_date", length = 255)
+    private String modifyDate;
+
+    @Column(name = "register_date", length = 255)
+    private String registerDate;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Check> checks;

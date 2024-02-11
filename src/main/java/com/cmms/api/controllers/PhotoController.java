@@ -74,9 +74,9 @@ public class PhotoController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Photo> updatePhoto(@PathVariable Integer id, @RequestBody Photo photo) {
-        Photo updatedPhoto = photoService.updatePhoto(id, photo);
+        Photo updatedPhoto = photoService.updatePhoto(id, photo.getFileName());
         return (updatedPhoto != null) ? new ResponseEntity<>(updatedPhoto, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

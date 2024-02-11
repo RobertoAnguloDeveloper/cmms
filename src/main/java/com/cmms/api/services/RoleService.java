@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +23,11 @@ public class RoleService {
         // Verifica si los roles ya existen en la base de datos
         if (roleRepository.findAll().isEmpty()) {
             // Si no existen, crea los roles iniciales
-            createRole("Supervisor", "Can create users, questions, answers, deviations, remedial actions, workshops, checks and photos.");
+            createRole("Supervisor",
+                    "Can create users, questions, answers, deviations, remedial actions, workshops, checks and photos.");
             createRole("Technician", "Can create checks and photos");
-            createRole("Site manager", "Can create users, questions, answers, deviations, remedial actions, workshops, checks and photos.");
+            createRole("Site manager",
+                    "Can create users, questions, answers, deviations, remedial actions, workshops, checks and photos.");
             createRole("Superuser", "Domain of the whole database");
         }
     }
@@ -48,7 +51,8 @@ public class RoleService {
 
     @SuppressWarnings("null")
     public Role createRole(Role role) {
-        // Puedes realizar validaciones u operaciones adicionales antes de guardar el rol
+        // Puedes realizar validaciones u operaciones adicionales antes de guardar el
+        // rol
         return roleRepository.save(role);
     }
 
@@ -60,11 +64,16 @@ public class RoleService {
             if (existingRole.isPresent()) {
                 Role updatedRole = existingRole.get();
 
-                // Actualiza los campos según sea necesario
-                updatedRole.setRoleName(role.getRoleName());
-                updatedRole.setDescription(role.getDescription());
+                // Actualiza los campos no nulos
+                if (role.getRoleName() != null) {
+                    updatedRole.setRoleName(role.getRoleName());
+                }
+                if (role.getDescription() != null) {
+                    updatedRole.setDescription(role.getDescription());
+                }
 
-                // Puedes actualizar otros campos aquí
+                // Actualiza la fecha de modificación
+                updatedRole.setModifyDate(LocalDateTime.now().toString());
 
                 return roleRepository.save(updatedRole);
             } else {

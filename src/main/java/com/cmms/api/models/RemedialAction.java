@@ -26,6 +26,12 @@ public class RemedialAction {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @Column(name = "modify_date", length = 255)
+    private String modifyDate;
+
+    @Column(name = "register_date", length = 255)
+    private String registerDate;
+
     @OneToMany(mappedBy = "remedialAction")
     @JsonIgnore
     private List<Check> checks;
