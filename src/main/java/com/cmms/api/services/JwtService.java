@@ -57,6 +57,8 @@ public class JwtService {
                     .signWith(getSignInKey())
                     .compact();
     }
+
+
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSignInKey())
