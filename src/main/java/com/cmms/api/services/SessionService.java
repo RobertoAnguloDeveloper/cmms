@@ -23,6 +23,10 @@ public class SessionService {
         return sessionRepository.findById(id);
     }
 
+    public Optional<Session> getSessionByToken(String token) {
+        return sessionRepository.findByToken(token);
+    }
+
     public Session saveSession(Session session) {
         return sessionRepository.save(session);
     }
@@ -37,6 +41,9 @@ public class SessionService {
                 // Actualiza los campos no nulos
                 if (session.getToken() != null) {
                     updatedSession.setToken(session.getToken());
+                }
+                if (session.getUsername() != null) {
+                    updatedSession.setUsername(session.getUsername());
                 }
                 if (session.getModifyDate() != null) {
                     updatedSession.setModifyDate(session.getModifyDate());

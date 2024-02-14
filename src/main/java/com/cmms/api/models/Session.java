@@ -16,8 +16,11 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "token", nullable = false)
+    @Column(name = "token", columnDefinition = "text")
     private String token;
+
+    @Column(name = "username", nullable = false, length = 20)
+    private String username;
 
     @Column(name = "modify_date", length = 255)
     private String modifyDate;
