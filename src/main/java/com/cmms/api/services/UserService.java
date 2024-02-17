@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,8 +75,11 @@ public class UserService {
                     updatedUser.setPhone(user.getPhone());
                 }
 
+                // Obtiene la fecha y hora actual en UTC+3
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+
                 // Actualiza la fecha de modificación
-                updatedUser.setModifyDate(LocalDateTime.now().toString());
+                updatedUser.setModifyDate(now.toString());
 
                 return userRepository.save(updatedUser);
             } else {

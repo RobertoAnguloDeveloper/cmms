@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,8 +73,11 @@ public class RoleService {
                     updatedRole.setDescription(role.getDescription());
                 }
 
+                // Obtiene la fecha y hora actual en UTC+3
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+
                 // Actualiza la fecha de modificación
-                updatedRole.setModifyDate(LocalDateTime.now().toString());
+                updatedRole.setModifyDate(now.toString());
 
                 return roleRepository.save(updatedRole);
             } else {

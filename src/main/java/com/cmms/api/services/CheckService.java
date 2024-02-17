@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,9 +56,12 @@ public class CheckService {
                 if (check.getUserId() != null) {
                     updatedCheck.setUserId(check.getUserId());
                 }
+
+                // Obtiene la fecha y hora actual en UTC+3
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
     
                 // Actualiza la fecha de modificación
-                updatedCheck.setModifyDate(LocalDateTime.now().toString());
+                updatedCheck.setModifyDate(now.toString());
     
                 return checkRepository.save(updatedCheck);
             } else {

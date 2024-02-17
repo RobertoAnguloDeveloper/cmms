@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +46,11 @@ public class DeviationService {
                     updatedDeviation.setDescription(deviation.getDescription());
                 }
 
+                // Obtiene la fecha y hora actual en UTC+3
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+
                 // Actualiza la fecha de modificación
-                updatedDeviation.setModifyDate(LocalDateTime.now().toString());
+                updatedDeviation.setModifyDate(now.toString());
 
                 return deviationRepository.save(updatedDeviation);
             } else {

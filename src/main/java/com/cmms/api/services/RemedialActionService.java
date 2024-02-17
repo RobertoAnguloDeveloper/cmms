@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,11 @@ public class RemedialActionService {
                     updatedRemedialAction.setDescription(remedialAction.getDescription());
                 }
 
+                // Obtiene la fecha y hora actual en UTC+3
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+
                 // Actualiza la fecha de modificación
-                updatedRemedialAction.setModifyDate(LocalDateTime.now().toString());
+                updatedRemedialAction.setModifyDate(now.toString());
 
                 return remedialActionRepository.save(updatedRemedialAction);
             } else {

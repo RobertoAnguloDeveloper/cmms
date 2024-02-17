@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +40,11 @@ public class PhotoService {
             Photo photo = existingPhoto.get();
             photo.setFileName(fileName);
 
+            // Obtiene la fecha y hora actual en UTC+3
+            LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+
             // Actualiza la fecha de modificación
-            photo.setModifyDate(LocalDateTime.now().toString());
+            photo.setModifyDate(now.toString());
             return photoRepository.save(photo);
         } else {
             return null; // Manejar el caso de foto no encontrada
