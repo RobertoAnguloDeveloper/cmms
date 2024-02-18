@@ -43,7 +43,7 @@ public class QuestionService {
                 }
 
                 // Obtiene la fecha y hora actual en UTC+3
-                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC-3"));
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC-6"));
 
                 // Actualiza la fecha de modificación
                 updatedQuestion.setModifyDate(now.toString());
