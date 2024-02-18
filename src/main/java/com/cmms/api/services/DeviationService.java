@@ -47,7 +47,7 @@ public class DeviationService {
                 }
 
                 // Obtiene la fecha y hora actual en UTC+3
-                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC+3"));
+                LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC-3"));
 
                 // Actualiza la fecha de modificación
                 updatedDeviation.setModifyDate(now.toString());
